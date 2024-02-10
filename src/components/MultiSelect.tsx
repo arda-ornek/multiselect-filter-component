@@ -3,13 +3,14 @@ import {
   Autocomplete,
   AutocompleteChangeReason,
   Avatar,
+  Checkbox,
   ListItem,
   ListItemAvatar,
   ListItemText,
   TextField,
   Typography,
 } from "@mui/material";
-import { SyntheticEvent, useCallback, useState } from "react";
+import { SyntheticEvent, useCallback, useMemo, useState } from "react";
 import useGetCharacters from "../hooks/useGetCharacters";
 import { Character } from "../types";
 import useCustomDebounce from "../hooks/useCustomDebounce";
@@ -45,6 +46,12 @@ const MultiSelect = () => {
     isFetching,
     isError,
   } = useGetCharacters(searchTerm);
+
+  const characterNames = useMemo(() => {
+    return values
+      .filter((item) => typeof item !== "string") // karakter nesnelerini filtrele
+      .map((character) => (character as Character).name);
+  }, [values]);
 
   const handleAutocompleteChange = useCallback(
     (
@@ -85,9 +92,13 @@ const MultiSelect = () => {
           }
           return option.name.toString();
         }}
-        renderOption={(props, option) => {
+        renderOption={(props, option, { selected }) => {
+          console.log("option /// ", characterNames.includes(option.name));
           return (
             <ListItem {...props} key={option.id}>
+              <Checkbox
+                checked={selected || characterNames.includes(option.name)}
+              />
               <ListItemAvatar>
                 <Avatar src={option.image} />
               </ListItemAvatar>

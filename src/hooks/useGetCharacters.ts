@@ -13,7 +13,6 @@ const useGetCharacters = (searchTerm: string) => {
   const { data, refetch, isLoading, isFetching, isError } = useQuery({
     queryKey: ["characters", searchTerm],
     queryFn: () => fetchCharacters(searchTerm),
-    enabled: searchTerm !== "",
     staleTime: 0,
   });
   return { data, refetch, isLoading, isFetching, isError };
