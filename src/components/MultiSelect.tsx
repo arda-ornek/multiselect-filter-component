@@ -93,7 +93,6 @@ const MultiSelect = () => {
           return option.name.toString();
         }}
         renderOption={(props, option, { selected }) => {
-          console.log("option /// ", characterNames.includes(option.name));
           return (
             <ListItem {...props} key={option.id}>
               <Checkbox

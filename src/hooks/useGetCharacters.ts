@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Character } from "../types";
 const fetchCharacters = async (searchTerm: string) => {
-  const params = { name: searchTerm };
+  const params = searchTerm ? { name: searchTerm } : {};
   const response = await axios.get(
     `https://rickandmortyapi.com/api/character`,
     { params }
