@@ -1,6 +1,7 @@
 import {
   Alert,
   Autocomplete,
+  AutocompleteChangeReason,
   Avatar,
   ListItem,
   ListItemAvatar,
@@ -46,18 +47,14 @@ const MultiSelect = () => {
   } = useGetCharacters(searchTerm);
 
   const handleAutocompleteChange = useCallback(
-    (_event: SyntheticEvent<Element, Event>, value: (string | Character)[]) => {
-      const isOption = characters.some(
-        (character) =>
-          character.name.toLowerCase() ===
-          (value.slice(-1)?.[0] as Character).name.toLowerCase()
-      );
-
-      if (isOption) {
-        setValues(value);
-      }
+    (
+      _event: SyntheticEvent<Element, Event>,
+      value: (string | Character)[],
+      reason: AutocompleteChangeReason
+    ) => {
+      if (reason !== "createOption") setValues(value);
     },
-    [characters]
+    []
   );
 
   return (
